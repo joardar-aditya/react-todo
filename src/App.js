@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Todos from './todos';
 
 class App extends Component {
 
@@ -8,6 +9,8 @@ class App extends Component {
             todos : [],
             text : ""
         }
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     submitTodo = e => {
@@ -18,17 +21,40 @@ class App extends Component {
             this.setState(
                 {todos : [...this.state.todos,{
                     desc : this.state.text,
+                    done : false,
+                    id: Date.now()
                 } ]}
             )
             
     }
-
+    
     handleChange = async e => {
+        e.preventDefault();
         await this.setState(
             {
                 text : e.target.value
             }
         )
+        
+    }
+    //handling deleting the items in the list
+    handleDelete(id) {
+        this.setState( s => ({
+            todos : s.todos.filter(el => el.id !== id),
+        }));
+    }
+    //handling updating the list item in the list 
+    handleUpdate(id, text) {
+        let current_todo = this.state.todos;
+        for(var i in current_todo){
+            if(current_todo[i].id === id){
+                current_todo[i].desc = text;
+                break;
+            }
+        }
+        this.setState({
+            todos: current_todo,
+        })
     }
 
     render() {
@@ -44,7 +70,9 @@ class App extends Component {
                           <button class="btn btn-secondary" type="button" onClick={this.submitTodo}>Add</button>
                      </div>
                 </div>
-                <div>{this.state.todos.map((todo) => <div className="px-4 py-4 my-3 rounded border border-white"> {todo.desc}</div>)}</div>
+                <div>
+                   <Todos _handleUpdate={this.handleUpdate} _handleDelete={this.handleDelete} items={this.state.todos} />
+                </div>
              </div>
 
 
