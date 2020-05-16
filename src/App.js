@@ -15,16 +15,20 @@ class App extends Component {
 
     submitTodo = e => {
             e.preventDefault();
-            this.setState({
-                text:""
-            }) 
+            if(this.state.text !== ""){
             this.setState(
                 {todos : [...this.state.todos,{
                     desc : this.state.text,
                     done : false,
                     id: Date.now()
                 } ]}
-            )
+            );
+            this.setState({
+                text:""
+            }); 
+        }else{
+                alert("Your todo cannot be empty!");
+            }
             
     }
     
@@ -45,6 +49,7 @@ class App extends Component {
     }
     //handling updating the list item in the list 
     handleUpdate(id, text) {
+        if(text != null){
         let current_todo = this.state.todos;
         for(var i in current_todo){
             if(current_todo[i].id === id){
@@ -54,7 +59,9 @@ class App extends Component {
         }
         this.setState({
             todos: current_todo,
-        })
+        });}else{
+            alert("Your todo cannot be empty!");
+        }
     }
 
     render() {

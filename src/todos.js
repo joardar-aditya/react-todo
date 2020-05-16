@@ -43,7 +43,7 @@ class Todos extends React.Component {
             todo => (
                 <div><div className="px-4 py-4 my-3 rounded border border-white row" key={todo.id}><div className="col-8">{todo.desc}</div>
                 <div className="col-2"><button className="btn btn-secondary" type="button" onClick={this.changeUpdate.bind(this, todo.id)}> Update </button></div>
-                <div className="col-2"><button className="btn btn-success" type="button" onClick={this._handleDelete.bind(this, todo.id)}> Mark as Done </button></div>
+                <div className="col-2"><button className="btn btn-success" type="button" onClick={this._handleDelete.bind(this, todo.id)}> Done! </button></div>
                 </div>
                 {(this.state.update === todo.id)?<div>
                 <div className="input-group mx-md-4 my-4">
